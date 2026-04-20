@@ -6,7 +6,7 @@
 - [GROUP_NAME]: 
 - [REPO_URL]: 
 - [MEMBERS]:
-  - Member A: [Name] | Role: Logging & PII
+  - Member A: [Trần Nhật Minh] | Role: Logging & PII
   - Member B: [Nguyễn Công Nhật Tân - 2A202600141] | Role: Tracing & Enrichment
   - Member C: [Đồng Mạnh Hùng] | Role: SLO & Alerts
   - Member D: [Phan Nguyen Viet Nhan] | Role: Load Test & Dashboard
@@ -24,8 +24,8 @@
 ## 3. Technical Evidence (Group)
 
 ### 3.1 Logging & Tracing
-- [EVIDENCE_CORRELATION_ID_SCREENSHOT]: [Path to image]
-- [EVIDENCE_PII_REDACTION_SCREENSHOT]: [Path to image]
+- [EVIDENCE_CORRELATION_ID_SCREENSHOT]: ![alt text](image-1.png)
+- [EVIDENCE_PII_REDACTION_SCREENSHOT]: ![alt text](image-2.png) ![alt text](image-3.png)
 - [EVIDENCE_TRACE_WATERFALL_SCREENSHOT]: ![Trace Waterfall](image.png)
 - [TRACE_WATERFALL_EXPLANATION]: Cấu trúc vết (Trace) được trình bày dạng thác nước giúp quan sát rõ thứ tự thực thi. Vỏ bọc ngoài cùng là `run` (toàn bộ phiên xử lý). Bên trong chứa nhánh `retrieve` cho thấy thời gian tìm tài liệu và nhánh `llm-call` bao bọc tác vụ AI. Đáng chú ý là span con `generate` lọt thỏm trong `llm-call` ghi nhận chi tiết thời gian phản hồi là 0.15s, cùng thông số token (Input: 28, Output: 138). Phân tầng rõ ràng như vậy giúp kỹ sư lập tức nhìn ra nguyên nhân gây độ trễ hệ thống nằm ở AI hay do RAG truy xuất chậm.
 
@@ -58,8 +58,8 @@
 ## 5. Individual Contributions & Evidence
 
 ### [MEMBER_A_NAME]
-- [TASKS_COMPLETED]: 
-- [EVIDENCE_LINK]: (Link to specific commit or PR)
+- [TASKS_COMPLETED]: implement pii masking, logging config and tracing. Refactor to use langfuse 4.3.1
+- [EVIDENCE_LINK]: Commit 269ab4505e4a54fe903d56087e1dd2c88a3264a7, Commit 705e5094ec423e1197ad508de1f00ebed203380c
 
 ### [Nguyễn Công Nhật Tân]
 - [TASKS_COMPLETED]: add trace observe for agent and mock_llm, mock_rag, add log enrichment
