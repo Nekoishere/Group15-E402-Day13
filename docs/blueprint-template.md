@@ -63,7 +63,7 @@
 
 ### [Nguyễn Công Nhật Tân]
 - [TASKS_COMPLETED]: add trace observe for agent and mock_llm, mock_rag, add log enrichment
-- [EVIDENCE_LINK]: Commit 9d41730 (add trace), Commit d7d8c99 (add log enrichment)
+- [EVIDENCE_LINK]: Commit 9d4173070df948f769af47f1138d54e7ceab1193 (add trace), Commit d7d8c99d6c850e41b720fe5a2138d0f5ec18f7a1 (add log enrichment)
 
 ### [Đồng Mạnh Hùng]
 - [TASKS_COMPLETED]: Defined SLI/SLO targets for latency, error rate, cost, and quality. Updated `config/slo.yaml` and `config/alert_rules.yaml` so alert thresholds align with metrics exposed by `/metrics`. Expanded `docs/alerts.md` into an actionable runbook. Added derived observability metrics in `app/metrics.py` including `error_rate_pct`, `success_rate_pct`, `requests_over_slo`, and `hourly_cost_usd`, then validated them with tests.
