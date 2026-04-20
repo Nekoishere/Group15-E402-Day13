@@ -57,23 +57,23 @@
 
 ## 5. Individual Contributions & Evidence
 
-### [MEMBER_A_NAME]
+### [Trần Nhật Minh] - Logging & PII
 - [TASKS_COMPLETED]: implement pii masking, logging config and tracing. Refactor to use langfuse 4.3.1
 - [EVIDENCE_LINK]: Commit 269ab4505e4a54fe903d56087e1dd2c88a3264a7, Commit 705e5094ec423e1197ad508de1f00ebed203380c
 
-### [Nguyễn Công Nhật Tân]
+### [Nguyễn Công Nhật Tân] - Tracing & Enrichment
 - [TASKS_COMPLETED]: add trace observe for agent and mock_llm, mock_rag, add log enrichment
 - [EVIDENCE_LINK]: Commit 9d4173070df948f769af47f1138d54e7ceab1193 (add trace), Commit d7d8c99d6c850e41b720fe5a2138d0f5ec18f7a1 (add log enrichment)
 
-### [Đồng Mạnh Hùng]
+### [Đồng Mạnh Hùng] - SLO & Alerts
 - [TASKS_COMPLETED]: Defined SLI/SLO targets for latency, error rate, cost, and quality. Updated `config/slo.yaml` and `config/alert_rules.yaml` so alert thresholds align with metrics exposed by `/metrics`. Expanded `docs/alerts.md` into an actionable runbook. Added derived observability metrics in `app/metrics.py` including `error_rate_pct`, `success_rate_pct`, `requests_over_slo`, and `hourly_cost_usd`, then validated them with tests.
 - [EVIDENCE_LINK]: [Commit or PR link for `app/metrics.py`, `config/slo.yaml`, `config/alert_rules.yaml`, `docs/alerts.md`, and `tests/test_metrics.py`]
 
-### [Phan Nguyen Viet Nhan]
+### [Phan Nguyễn Việt Nhân] - Load Test & Dashboard
 - [TASKS_COMPLETED]: Load testing simulation using `--concurrency 5`. Injected and documented `rag_slow` incident. Created a 6-panel real-time Observability Dashboard in `dashboard.html` that pulls metrics every 2s.
 - [EVIDENCE_LINK]: commit e9ce339: Add member D
 
-### Phan Anh Ly Ly — Blueprint & Demo Lead
+### [Phan Anh Ly Ly] - Blueprint & Demo Lead
 - [TASKS_COMPLETED]:
   1. Implemented `app/middleware.py` — Correlation ID middleware: generate `req-<8hex>`, bind to structlog contextvars, propagate to response headers `x-request-id` and `x-response-time-ms`
   2. Implemented `app/main.py` — Log enrichment: `bind_contextvars(user_id_hash, session_id, feature, model, env)` on every `/chat` request
