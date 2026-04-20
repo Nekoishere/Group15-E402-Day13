@@ -9,7 +9,7 @@
   - Member A: [Name] | Role: Logging & PII
   - Member B: [Nguyễn Công Nhật Tân - 2A202600141] | Role: Tracing & Enrichment
   - Member C: [Name] | Role: SLO & Alerts
-  - Member D: [Name] | Role: Load Test & Dashboard
+  - Member D: [Phan Nguyen Viet Nhan] | Role: Load Test & Dashboard
   - Member E: [Name] | Role: Demo & Report
 
 ---
@@ -67,9 +67,9 @@
 - [TASKS_COMPLETED]: 
 - [EVIDENCE_LINK]: 
 
-### [MEMBER_D_NAME]
-- [TASKS_COMPLETED]: 
-- [EVIDENCE_LINK]: 
+### [Phan Nguyen Viet Nhan]
+- [TASKS_COMPLETED]: Load testing simulation using `--concurrency 5`. Injected and documented `rag_slow` incident. Created a 6-panel real-time Observability Dashboard in `dashboard.html` that pulls metrics every 2s.
+- [EVIDENCE_LINK]: commit e9ce339: Add member D
 
 ### [MEMBER_E_NAME]
 - [TASKS_COMPLETED]: 
