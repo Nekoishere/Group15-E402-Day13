@@ -45,11 +45,11 @@
 ---
 
 ## 4. Incident Response (Group)
-- [SCENARIO_NAME]: (e.g., rag_slow)
-- [SYMPTOMS_OBSERVED]: 
-- [ROOT_CAUSE_PROVED_BY]: (List specific Trace ID or Log Line)
-- [FIX_ACTION]: 
-- [PREVENTIVE_MEASURE]: 
+- [SCENARIO_NAME]: rag_slow
+- [SYMPTOMS_OBSERVED]: P95 Latency spiked dramatically (from ~800ms baseline to >13,000ms under load of 5 concurrent requests). SLO breached.
+- [ROOT_CAUSE_PROVED_BY]: The tracing span for `retrieve` showed a manual artificial 2.5s sequentially blocking sleep per query.
+- [FIX_ACTION]: Disabled the `rag_slow` incident via `scripts/inject_incident.py --disable`.
+- [PREVENTIVE_MEASURE]: Implement strict timeouts on the vector retrieval tool and provide a fallback retrieval strategy to avoid unbounded blocking.
 
 ---
 

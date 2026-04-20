@@ -23,6 +23,14 @@ def record_request(latency_ms: int, cost_usd: float, tokens_in: int, tokens_out:
     REQUEST_TOKENS_IN.append(tokens_in)
     REQUEST_TOKENS_OUT.append(tokens_out)
     QUALITY_SCORES.append(quality_score)
+    
+    # Restrict to a sliding window of last 50 requests so the dashboard reacts instantly
+    if len(REQUEST_LATENCIES) > 50:
+        REQUEST_LATENCIES.pop(0)
+        REQUEST_COSTS.pop(0)
+        REQUEST_TOKENS_IN.pop(0)
+        REQUEST_TOKENS_OUT.pop(0)
+        QUALITY_SCORES.pop(0)
 
 
 
