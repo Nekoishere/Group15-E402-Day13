@@ -16,7 +16,7 @@ from .metrics import record_error, snapshot
 from .middleware import CorrelationIdMiddleware
 from .pii import hash_user_id, summarize_text
 from .schemas import ChatRequest, ChatResponse
-from .tracing import tracing_enabled
+from .tracing import get_client, tracing_enabled
 
 configure_logging()
 log = get_logger()
@@ -34,6 +34,10 @@ async def startup() -> None:
         payload={"tracing_enabled": tracing_enabled()},
     )
 
+@app.on_event("shutdown")
+async def shutdown() -> None:
+    if tracing_enabled():
+        get_client().shutdown()
 
 @app.get("/health")
 async def health() -> dict:
