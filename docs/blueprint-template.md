@@ -61,7 +61,7 @@
 
 ### [Nguyễn Công Nhật Tân]
 - [TASKS_COMPLETED]: add trace observe for agent and mock_llm, mock_rag, add log enrichment
-- [EVIDENCE_LINK]: Commit 9d41730 (add trace), Commit d7d8c99 (add log enrichment)
+- [EVIDENCE_LINK]: Commit 9d4173070df948f769af47f1138d54e7ceab1193 (add trace), Commit d7d8c99d6c850e41b720fe5a2138d0f5ec18f7a1 (add log enrichment)
 
 ### [MEMBER_C_NAME]
 - [TASKS_COMPLETED]: 
