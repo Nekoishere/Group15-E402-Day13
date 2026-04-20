@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 13 Observability Lab - Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --panel-bg: #1e293b;
+            --text-color: #f8fafc;
+            --primary: #38bdf8;
+            --danger: #ef4444;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 2rem;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        h1 { margin: 0; font-weight: 600; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .panel {
+            background: var(--panel-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border-top: 4px solid var(--primary);
+            position: relative;
+        }
+        .panel h3 {
+            margin-top: 0;
+            color: #94a3b8;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .value {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin: 10px 0;
+        }
+        .sub-value {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+        }
+        .threshold {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 0.8rem;
+            background: rgba(255,255,255,0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        /* Specific panel tweaks */
+        .danger-text { color: var(--danger); }
+        .success-text { color: var(--success); }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>🚀 Agent Observability Dashboard</h1>
+        <div id="status">Refreshing in 2s...</div>
+    </div>
+
+    <div class="grid">
+        <!-- Panel 1: Latency -->
+        <div class="panel">
+            <div class="threshold">SLO: &lt; 3000ms</div>
+            <h3>1. Latency (P95)</h3>
+            <div class="value" id="latency-val">-- ms</div>
+            <div class="sub-value">P50: <span id="latency-p50">--</span> | P99: <span id="latency-p99">--</span></div>
+        </div>
+
+        <!-- Panel 2: Traffic -->
+        <div class="panel">
+            <h3>2. Traffic (Total Requests)</h3>
+            <div class="value" id="traffic-val">--</div>
+            <div class="sub-value">Uptime: <span id="uptime-val">--</span>s</div>
+        </div>
+
+        <!-- Panel 3: Errors -->
+        <div class="panel">
+            <div class="threshold">SLO: &lt; 2%</div>
+            <h3>3. Error Rate</h3>
+            <div class="value" id="error-val">--%</div>
+            <div class="sub-value" id="error-breakdown">Breakdown: None</div>
+        </div>
+
+        <!-- Panel 4: Cost -->
+        <div class="panel">
+            <div class="threshold">Budget: $2.5/day</div>
+            <h3>4. Cost over Time</h3>
+            <div class="value" id="cost-val">$0.00</div>
+            <div class="sub-value">Est. Hourly: $<span id="cost-hourly">--</span></div>
+        </div>
+
+        <!-- Panel 5: Tokens -->
+        <div class="panel">
+            <h3>5. Tokens (In / Out)</h3>
+            <div class="value" id="tokens-val">-- / --</div>
+            <div class="sub-value">Avg Session: <span id="tokens-avg">--</span> / <span id="tokens-out-avg">--</span></div>
+        </div>
+
+        <!-- Panel 6: Quality -->
+        <div class="panel">
+            <div class="threshold">SLO: &gt; 0.75</div>
+            <h3>6. Quality Proxy</h3>
+            <div class="value" id="quality-val">--</div>
+            <div class="sub-value">Average Quality Score</div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = "http://127.0.0.1:8000/metrics";
+
+        async function fetchMetrics() {
+            try {
+                const response = await fetch(API_URL);
+                const data = await response.json();
+                
+                // 1. Latency
+                const p95 = data.latency_p95;
+                const p95Elem = document.getElementById('latency-val');
+                p95Elem.innerText = `${p95} ms`;
+                p95Elem.className = `value ${p95 > 3000 ? 'danger-text' : 'success-text'}`;
+                document.getElementById('latency-p50').innerText = `${data.latency_p50}ms`;
+                document.getElementById('latency-p99').innerText = `${data.latency_p99}ms`;
+
+                // 2. Traffic
+                document.getElementById('traffic-val').innerText = data.traffic;
+                document.getElementById('uptime-val').innerText = data.uptime_s;
+
+                // 3. Error Rate
+                const errRate = data.error_rate_pct;
+                const errElem = document.getElementById('error-val');
+                errElem.innerText = `${errRate}%`;
+                errElem.className = `value ${errRate > 2 ? 'danger-text' : 'success-text'}`;
+                document.getElementById('error-breakdown').innerText = 
+                    Object.keys(data.error_breakdown).length ? JSON.stringify(data.error_breakdown) : "No errors detected";
+
+                // 4. Cost
+                document.getElementById('cost-val').innerText = `$${data.total_cost_usd.toFixed(4)}`;
+                document.getElementById('cost-hourly').innerText = data.hourly_cost_usd.toFixed(4);
+
+                // 5. Tokens
+                document.getElementById('tokens-val').innerText = `${data.tokens_in_total} / ${data.tokens_out_total}`;
+                document.getElementById('tokens-avg').innerText = data.tokens_in_avg;
+                document.getElementById('tokens-out-avg').innerText = data.tokens_out_avg;
+
+                // 6. Quality
+                const qual = data.quality_avg;
+                const qualElem = document.getElementById('quality-val');
+                qualElem.innerText = qual.toFixed(2);
+                qualElem.className = `value ${qual < 0.75 ? 'warning-text' : 'success-text'}`;
+
+            } catch (err) {
+                console.error("Failed to fetch metrics", err);
+            }
+        }
+
+        // Initial fetch
+        fetchMetrics();
+        // Polling
+        setInterval(fetchMetrics, 2000);
+    </script>
+</body>
+</html>

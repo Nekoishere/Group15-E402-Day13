@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, HTMLResponse
 from structlog.contextvars import bind_contextvars
 
 from .agent import LabAgent
@@ -18,9 +18,19 @@ from .pii import hash_user_id, summarize_text
 from .schemas import ChatRequest, ChatResponse
 from .tracing import get_client, tracing_enabled
 
+from fastapi.middleware.cors import CORSMiddleware
+
 configure_logging()
 log = get_logger()
 app = FastAPI(title="Day 13 Observability Lab")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins for the lab
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 app.add_middleware(CorrelationIdMiddleware)
 agent = LabAgent()
 
@@ -48,6 +58,11 @@ async def health() -> dict:
 async def metrics() -> dict:
     return snapshot()
 
+@app.get("/dashboard", response_class=HTMLResponse)
+async def dashboard_ui():
+    """Serves the real-time observability dashboard."""
+    with open("dashboard.html", "r", encoding="utf-8") as f:
+        return f.read()
 
 @app.post("/chat", response_model=ChatResponse)
 async def chat(request: Request, body: ChatRequest) -> ChatResponse:
