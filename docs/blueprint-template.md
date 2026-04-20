@@ -8,7 +8,7 @@
 - [MEMBERS]:
   - Member A: [Name] | Role: Logging & PII
   - Member B: [Nguyễn Công Nhật Tân - 2A202600141] | Role: Tracing & Enrichment
-  - Member C: [Name] | Role: SLO & Alerts
+  - Member C: [Đồng Mạnh Hùng] | Role: SLO & Alerts
   - Member D: [Name] | Role: Load Test & Dashboard
   - Member E: [Name] | Role: Demo & Report
 
@@ -34,13 +34,15 @@
 - [SLO_TABLE]:
 | SLI | Target | Window | Current Value |
 |---|---:|---|---:|
-| Latency P95 | < 3000ms | 28d | |
-| Error Rate | < 2% | 28d | |
-| Cost Budget | < $2.5/day | 1d | |
+| Latency P95 | < 3000ms | 28d | Read from `/metrics.latency_p95`; when `rag_slow` is enabled this value breaches the target and confirms the latency SLO is observable |
+| Error Rate | < 2% | 28d | Read from `/metrics.error_rate_pct`; validate with `tool_fail` by checking `total_errors` and `error_breakdown` together |
+| Cost Budget | < $2.5/day | 1d | Daily budget tracked with `total_cost_usd`, while short-term burn spike is watched through `hourly_cost_usd` |
+| Quality Score Avg | >= 0.75 | 28d | Read from `/metrics.quality_avg`; sustained drop below threshold indicates answer-quality regression even if availability stays normal |
 
 ### 3.3 Alerts & Runbook
 - [ALERT_RULES_SCREENSHOT]: [Path to image]
-- [SAMPLE_RUNBOOK_LINK]: [docs/alerts.md#L...]
+- [SAMPLE_RUNBOOK_LINK]: [docs/alerts.md#1-high-latency-p95]
+- [ALERT_SUMMARY]: `high_latency_p95` fires when `latency_p95 > 3000 for 15m`; `high_error_rate` fires when `error_rate_pct > 2 for 5m`; `cost_budget_spike` fires when `hourly_cost_usd > 2x_baseline for 15m`; `quality_regression` fires when `quality_avg < 0.75 for 30m`.
 
 ---
 
@@ -63,9 +65,9 @@
 - [TASKS_COMPLETED]: add trace observe for agent and mock_llm, mock_rag, add log enrichment
 - [EVIDENCE_LINK]: Commit 9d41730 (add trace), Commit d7d8c99 (add log enrichment)
 
-### [MEMBER_C_NAME]
-- [TASKS_COMPLETED]: 
-- [EVIDENCE_LINK]: 
+### [Đồng Mạnh Hùng]
+- [TASKS_COMPLETED]: Defined SLI/SLO targets for latency, error rate, cost, and quality. Updated `config/slo.yaml` and `config/alert_rules.yaml` so alert thresholds align with metrics exposed by `/metrics`. Expanded `docs/alerts.md` into an actionable runbook. Added derived observability metrics in `app/metrics.py` including `error_rate_pct`, `success_rate_pct`, `requests_over_slo`, and `hourly_cost_usd`, then validated them with tests.
+- [EVIDENCE_LINK]: [Commit or PR link for `app/metrics.py`, `config/slo.yaml`, `config/alert_rules.yaml`, `docs/alerts.md`, and `tests/test_metrics.py`]
 
 ### [MEMBER_D_NAME]
 - [TASKS_COMPLETED]: 
