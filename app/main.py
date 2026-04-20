@@ -51,15 +51,14 @@ async def metrics() -> dict:
 
 @app.post("/chat", response_model=ChatResponse)
 async def chat(request: Request, body: ChatRequest) -> ChatResponse:
-    # Enrich logs with request context
     bind_contextvars(
         user_id_hash=hash_user_id(body.user_id),
         session_id=body.session_id,
         feature=body.feature,
-        model="claude-sonnet-4-5",
+        model=agent.model,
         env=os.getenv("APP_ENV", "dev"),
     )
-
+    
     log.info(
         "request_received",
         service="api",

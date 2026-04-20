@@ -24,10 +24,10 @@
 ## 3. Technical Evidence (Group)
 
 ### 3.1 Logging & Tracing
-- [EVIDENCE_CORRELATION_ID_SCREENSHOT]: docs/screenshots/evidence_correlation_id.png
-- [EVIDENCE_PII_REDACTION_SCREENSHOT]: docs/screenshots/evidence_pii_redaction.png
-- [EVIDENCE_TRACE_WATERFALL_SCREENSHOT]: docs/screenshots/evidence_trace_waterfall.png
-- [TRACE_WATERFALL_EXPLANATION]: The "run" span contains two child spans: "retrieve" (mock RAG lookup, ~50ms) and "generate" (mock LLM, ~100ms). During the rag_slow incident, the "retrieve" span expanded to ~2200ms, demonstrating how distributed tracing pinpoints bottlenecks at the span level without needing log correlation.
+- [EVIDENCE_CORRELATION_ID_SCREENSHOT]: [Path to image]
+- [EVIDENCE_PII_REDACTION_SCREENSHOT]: [Path to image]
+- [EVIDENCE_TRACE_WATERFALL_SCREENSHOT]: ![Trace Waterfall](image.png)
+- [TRACE_WATERFALL_EXPLANATION]: Cấu trúc vết (Trace) được trình bày dạng thác nước giúp quan sát rõ thứ tự thực thi. Vỏ bọc ngoài cùng là `run` (toàn bộ phiên xử lý). Bên trong chứa nhánh `retrieve` cho thấy thời gian tìm tài liệu và nhánh `llm-call` bao bọc tác vụ AI. Đáng chú ý là span con `generate` lọt thỏm trong `llm-call` ghi nhận chi tiết thời gian phản hồi là 0.15s, cùng thông số token (Input: 28, Output: 138). Phân tầng rõ ràng như vậy giúp kỹ sư lập tức nhìn ra nguyên nhân gây độ trễ hệ thống nằm ở AI hay do RAG truy xuất chậm.
 
 ### 3.2 Dashboard & SLOs
 - [DASHBOARD_6_PANELS_SCREENSHOT]: docs/screenshots/evidence_dashboard.png
@@ -60,9 +60,9 @@
 - [TASKS_COMPLETED]:
 - [EVIDENCE_LINK]:
 
-### [MEMBER_B_NAME]
-- [TASKS_COMPLETED]:
-- [EVIDENCE_LINK]:
+### [Nguyễn Công Nhật Tân]
+- [TASKS_COMPLETED]: add trace observe for agent and mock_llm, mock_rag, add log enrichment
+- [EVIDENCE_LINK]: Commit 9d41730 (add trace), Commit d7d8c99 (add log enrichment)
 
 ### [MEMBER_C_NAME]
 - [TASKS_COMPLETED]:
