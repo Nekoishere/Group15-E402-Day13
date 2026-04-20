@@ -6,10 +6,10 @@
 - [GROUP_NAME]: Group15-E402
 - [REPO_URL]: https://github.com/Nekoishere/Group15-E402-Day13
 - [MEMBERS]:
-  - Member A: [Name] | Role: Logging & PII
-  - Member B: [Name] | Role: Tracing & Enrichment
-  - Member C: [Name] | Role: SLO & Alerts
-  - Member D: [Name] | Role: Load Test & Dashboard
+  - Member A: Trần Nhật Minh | Role: Logging & PII
+  - Member B: Nguyễn Công Nhật Tân | Role: Tracing & Enrichment
+  - Member C: Đồng Mạnh Hùng | Role: SLO & Alerts
+  - Member D: Phan Nguyễn Việt Nhân | Role: Load Test & Dashboard
   - Member E: Phan Anh Ly Ly | Role: Blueprint & Demo Lead
 
 ---
