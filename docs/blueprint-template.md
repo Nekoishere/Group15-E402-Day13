@@ -7,7 +7,7 @@
 - [REPO_URL]: 
 - [MEMBERS]:
   - Member A: [Name] | Role: Logging & PII
-  - Member B: [Name] | Role: Tracing & Enrichment
+  - Member B: [Nguyễn Công Nhật Tân - 2A202600141] | Role: Tracing & Enrichment
   - Member C: [Name] | Role: SLO & Alerts
   - Member D: [Name] | Role: Load Test & Dashboard
   - Member E: [Name] | Role: Demo & Report
@@ -26,8 +26,8 @@
 ### 3.1 Logging & Tracing
 - [EVIDENCE_CORRELATION_ID_SCREENSHOT]: [Path to image]
 - [EVIDENCE_PII_REDACTION_SCREENSHOT]: [Path to image]
-- [EVIDENCE_TRACE_WATERFALL_SCREENSHOT]: [Path to image]
-- [TRACE_WATERFALL_EXPLANATION]: (Briefly explain one interesting span in your trace)
+- [EVIDENCE_TRACE_WATERFALL_SCREENSHOT]: ![Trace Waterfall](image.png)
+- [TRACE_WATERFALL_EXPLANATION]: Cấu trúc vết (Trace) được trình bày dạng thác nước giúp quan sát rõ thứ tự thực thi. Vỏ bọc ngoài cùng là `run` (toàn bộ phiên xử lý). Bên trong chứa nhánh `retrieve` cho thấy thời gian tìm tài liệu và nhánh `llm-call` bao bọc tác vụ AI. Đáng chú ý là span con `generate` lọt thỏm trong `llm-call` ghi nhận chi tiết thời gian phản hồi là 0.15s, cùng thông số token (Input: 28, Output: 138). Phân tầng rõ ràng như vậy giúp kỹ sư lập tức nhìn ra nguyên nhân gây độ trễ hệ thống nằm ở AI hay do RAG truy xuất chậm.
 
 ### 3.2 Dashboard & SLOs
 - [DASHBOARD_6_PANELS_SCREENSHOT]: [Path to image]
@@ -59,9 +59,9 @@
 - [TASKS_COMPLETED]: 
 - [EVIDENCE_LINK]: (Link to specific commit or PR)
 
-### [MEMBER_B_NAME]
-- [TASKS_COMPLETED]: 
-- [EVIDENCE_LINK]: 
+### [Nguyễn Công Nhật Tân]
+- [TASKS_COMPLETED]: add trace observe for agent and mock_llm, mock_rag, add log enrichment
+- [EVIDENCE_LINK]: Commit 9d41730 (add trace), 
 
 ### [MEMBER_C_NAME]
 - [TASKS_COMPLETED]: 
